@@ -1,100 +1,85 @@
 <!DOCTYPE html>
-<html lang="it">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Tabella dati</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 30px;
-        }
-        table {
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #444;
-            padding: 8px 12px;
-        }
-        th {
-            background-color: #eee;
-        }
-        input {
-            margin: 5px;
-        }
-    </style>
-</head>
-<body>
-    <h2>Tabella Dati Personali</h2>
-
-    <label>Nome: <input type="text" id="nome" value="Nicolò"></label><br>
-    <label>Cognome: <input type="text" id="cognome" value="Militello"></label><br>
-    <label>Indirizzo: <input type="text" id="indirizzo" value="Via Luigi Chiarelli 8"></label><br>
-    <label>Città: <input type="text" id="citta" value="Milano"></label><br>
-        <button onclick="stampaDati()">Mostra tabella</button>
-
-    <div id="risultato"></div>
-
+    <title>Anagrafica 2.0</title>
     <script>
         function stampaDati() {
-            var nome = document.getElementById("nome").value;
-            var cognome = document.getElementById("cognome").value;
-            var indirizzo = document.getElementById("indirizzo").value;
-            var citta = document.getElementById("citta").value;
+            let nome = document.getElementById("nome").value;
+            let cognome = document.getElementById("cognome").value;
+            let indirizzo = document.getElementById("indirizzo").value;
+            let citta = document.getElementById("citta").value;
 
-            var tabella = "<table>";
-            tabella += "<tr><th>Nome</th><th>Cognome</th><th>Indirizzo</th><th>Città</th></tr>";
-            tabella += "<tr>";
-            tabella += "<td>" + nome + "</td>";
-            tabella += "<td>" + cognome + "</td>";
-            tabella += "<td>" + indirizzo + "</td>";
-            tabella += "<td>" + citta + "</td>";
-            tabella += "</tr>";
-            tabella += "</table>";
+            let sesso = "";
+            if (document.getElementById("maschio").checked) sesso = "Maschio";
+            if (document.getElementById("femmina").checked) sesso = "Femmina";
+            if (document.getElementById("altro").checked) sesso = "Altro";
 
-            document.getElementById("risultato").innerHTML = tabella;
+            let diplomi = "";
+            if (document.getElementById("media").checked) diplomi += "terza media";
+            if (document.getElementById("superiore").checked) diplomi += "superiori";
+            if (document.getElementById("laurea").checked) diplomi += "Laurea";
+            if (document.getElementById("nessun_attestato").checked) diplomi += "Nessun diploma";
+
+            let provincia = document.getElementById("provincia").value;
+
+            let sportSelezionati = document.getElementById("sport");
+            let sport = "";
+            for (let i = 0; i < sportSelezionati.options.length; i++) {
+                if (sportSelezionati.options[i].selected) {
+                    sport += sportSelezionati.options[i].value + " ";
+                }
+            }
+
+            let risultato = document.getElementById("risultato");
+            risultato.innerHTML =
+                "<p><strong>Nome:</strong> " + nome + "</p>" +
+                "<p><strong>Cognome:</strong> " + cognome + "</p>" +
+                "<p><strong>Indirizzo:</strong> " + indirizzo + "</p>" +
+                "<p><strong>Città:</strong> " + citta + "</p>" +
+                "<p><strong>Sesso:</strong> " + sesso + "</p>" +
+                "<p><strong>Diplomi:</strong> " + diplomi + "</p>" +
+                "<p><strong>Provincia:</strong> " + provincia + "</p>" +
+                "<p><strong>Sport praticati:</strong> " + sport + "</p>";
         }
     </script>
-  <script type="text/javascript">
+</head>
+<body>
 
-   function controlla() {     
+    <h1>Tabella Dati</h1>
 
-        for(i=0;i<document.getElementsByName("sesso").length;i++) {
+    Nome: <input type="text" id="nome"><br>
+    Cognome: <input type="text" id="cognome"><br>
+    Indirizzo: <input type="text" id="indirizzo"><br>
+    Città: <input type="text" id="citta"><br><br>
 
-          if(document.getElementsByName("sesso")[i].checked){
+    Sesso:<br>
+    <input type="radio" id="maschio" name="sesso"> Maschio<br>
+    <input type="radio" id="femmina" name="sesso"> Femmina<br>
+    <input type="radio" id="altro" name="sesso"> Altro<br><br>
 
-           document.getElementById("risp").innerHTML = document.getElementsByName("sesso")[i].value
-           
-          }
+    Diplomi :<br>
+    <input type="checkbox" id="media"> terza media<br>
+    <input type="checkbox" id="superiore">Superiori<br>
+    <input type="checkbox" id="laurea"> Laurea<br>
+    <input type="checkbox" id="nessun_attestato"> Nessun diploma <br><br>
 
-        }
+    Provincia:
+    <select id="provincia">
+        <option>MI</option><option>RM</option><option>NA</option>
+        <option>PD</option><option>GE</option>
+        <option>RO</option><option>CZ</option>
+    </select><br><br>
 
-    }
-   </script>
- </head>
- <body>
-    <div style="margin-left:100px;">
-        <input type="radio" name="sesso" value="maschio">Maschio<br>
-        <input type="radio" name="sesso" value="femmina">Femmina<br>
-        <input type="radio" name="sesso" value="altro">Altro<br>
-        <input type="button" onclick="controlla();" value="Invia">
-    </div>
-   <p id="risp"></p>
+    Sport praticati:<br>
+    <select id="sport" multiple size="3">
+        <option>Calcio</option><option>Basket</option><option>Nuoto</option>
+        <option>Tennis</option><option>Pallavolo</option>
+    </select><br><br>
+
+    <button onclick="stampaDati()">Invia</button>
+
+    <h2>Risultato:</h2>
+    <div id="risultato"></div>
+
 </body>
-
-<input type="checkbox" id="diploma" name="diploma" value="noTitolo">
-<label for="diploma"> nessun titolo </label><br>
-<input type="checkbox" id="diploma" name="diploma" value="laurea">
-<label for="diploma"> laurea </label><br>
-<input type="checkbox" id="diploma" name="diploma" value="master">
-<label for="diploma"> master </label><br>
-
-<label for="sport">selezionare gli sport praticati :</label>
-<select name="sport" id="sport">
-  <option value="calcio">calcio</option>
-  <option value="basket">basket</option>
-  <option value="tennis">tennis</option>
-  <option value="nuoto">nuoto</option>
-</select>
-
 </html>
