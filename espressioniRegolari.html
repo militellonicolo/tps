@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Anagrafica 4.0</title>
+</head>
+<body>
+
+  <input type="text" id="nome"> Nome <br>
+  <input type="text" id="cognome"> Cognome <br>
+  <input type="number" id="eta"> Età <br>
+  <input type="text" id="citta"> Città <br>
+  <input type="text" id="cap"> CAP <br>
+  <input type="text" id="email"> E-mail <br>
+  <input type="text" id="telefono"> Telefono <br>
+  <input type="text" id="professione"> Professione <br>
+  <input type="text" id="nazione"> Nazione <br>
+
+  <input type="button" value="Inserisci" onclick="ana()">
+
+  <table border="1">
+    <tr>
+      <th>Nome</th>
+      <th>Cognome</th>
+      <th>Età</th>
+      <th>Città</th>
+      <th>CAP</th>
+      <th>Email</th>
+      <th>Telefono</th>
+      <th>Professione</th>
+      <th>Nazione</th>
+    </tr>
+    <tbody id="cont"></tbody>
+  </table>
+
+<script>
+
+let cont = document.getElementById("cont");
+let elementi = JSON.parse(localStorage.getItem("elenco"))  ;
+
+function mostraTabella() {
+  cont.innerHTML = "";
+  for (let i = 0; i < elementi.length; i++) {
+    let tr = document.createElement("tr");
+
+    tr.innerHTML =
+      "<td>" + elementi[i].nome + "</td>" +
+      "<td>" + elementi[i].cognome + "</td>" +
+      "<td>" + elementi[i].eta + "</td>" +
+      "<td>" + elementi[i].citta + "</td>" +
+      "<td>" + elementi[i].cap + "</td>" +
+      "<td>" + elementi[i].email + "</td>" +
+      "<td>" + elementi[i].telefono + "</td>" +
+      "<td>" + elementi[i].professione + "</td>" +
+      "<td>" + elementi[i].nazione + "</td>";
+
+    cont.appendChild(tr);
+  }
+}
+
+function ana() {
+
+  let nome = document.getElementById("nome").value;
+  let cognome = document.getElementById("cognome").value;
+  let eta = document.getElementById("eta").value;
+  let citta = document.getElementById("citta").value;
+  let cap = document.getElementById("cap").value;
+  let email = document.getElementById("email").value;
+  let telefono = document.getElementById("telefono").value;
+  let professione = document.getElementById("professione").value;
+  let nazione = document.getElementById("nazione").value;
+
+
+  let soloLettere = /^[A-Za-z]+$/;
+  let lettereSpazi = /^[A-Za-z\s]+$/;
+  let cinqueNumeri = /^\d{5}$/;
+  let emailRegex = /^\S+@\S+\.\S+$/;
+  let soloNumeriTel = /^\d{8,15}$/;
+
+
+
+  const persone = {};
+  persone.nome = nome; 
+  persone.cognome = cognome; 
+  persone.eta = eta;
+  persone.citta = citta;
+  persone.cap = cap;
+  persone.email = email;
+  persone.telefono = telefono;
+  persone.professione = professione;
+  persone.nazione = nazione;
+
+  elementi.push(persone);
+  localStorage.setItem("elenco", JSON.stringify(elementi));
+
+  mostraTabella();
+}
+
+mostraTabella();
+
+</script>
+
+</body>
+</html>
