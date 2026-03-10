@@ -59,16 +59,15 @@ function mostraTabella() {
 
 function ana() {
 
-  let nome = document.getElementById("nome").value;
-  let cognome = document.getElementById("cognome").value;
-  let eta = document.getElementById("eta").value;
-  let citta = document.getElementById("citta").value;
-  let cap = document.getElementById("cap").value;
-  let email = document.getElementById("email").value;
-  let telefono = document.getElementById("telefono").value;
-  let professione = document.getElementById("professione").value;
-  let nazione = document.getElementById("nazione").value;
-
+  let nome = document.getElementById("nome");
+  let cognome = document.getElementById("cognome");
+  let eta = document.getElementById("eta");
+  let citta = document.getElementById("citta");
+  let cap = document.getElementById("cap");
+  let email = document.getElementById("email");
+  let telefono = document.getElementById("telefono");
+  let professione = document.getElementById("professione");
+  let nazione = document.getElementById("nazione");
 
   let soloLettere = /^[A-Za-z]+$/;
   let lettereSpazi = /^[A-Za-z\s]+$/;
@@ -76,27 +75,53 @@ function ana() {
   let emailRegex = /^\S+@\S+\.\S+$/;
   let soloNumeriTel = /^\d{8,15}$/;
 
+  if (!soloLettere.test(nome.value)) {
+    nome.style.border = "2px solid red";
+    return;
+  }
 
+  if (!soloLettere.test(cognome.value)) {
+    cognome.style.border = "2px solid red";
+    return;
+  }
 
-  const persone = {};
-  persone.nome = nome; 
-  persone.cognome = cognome; 
-  persone.eta = eta;
-  persone.citta = citta;
-  persone.cap = cap;
-  persone.email = email;
-  persone.telefono = telefono;
-  persone.professione = professione;
-  persone.nazione = nazione;
+  if (!lettereSpazi.test(citta.value)) {
+    citta.style.border = "2px solid red";
+    return;
+  }
+
+  if (!cinqueNumeri.test(cap.value)) {
+    cap.style.border = "2px solid red";
+    return;
+  }
+
+  if (!emailRegex.test(email.value)) {
+    email.style.border = "2px solid red";
+    return;
+  }
+
+  if (!soloNumeriTel.test(telefono.value)) {
+    telefono.style.border = "2px solid red";
+    return;
+  }
+
+  const persone = {
+    nome: nome.value,
+    cognome: cognome.value,
+    eta: eta.value,
+    citta: citta.value,
+    cap: cap.value,
+    email: email.value,
+    telefono: telefono.value,
+    professione: professione.value,
+    nazione: nazione.value
+  };
 
   elementi.push(persone);
   localStorage.setItem("elenco", JSON.stringify(elementi));
 
   mostraTabella();
 }
-
-mostraTabella();
-
 </script>
 
 </body>
